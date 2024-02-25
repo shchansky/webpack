@@ -1,10 +1,15 @@
-import webpack, { Configuration } from "webpack";
+import webpack, { Configuration, DefinePlugin } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import { BuildOptions } from "./types/types";
 
-export function buildPlugins({mode, paths, isAnalyzer}: BuildOptions): Configuration["plugins"] {
+export function buildPlugins({
+  mode,
+  paths,
+  isAnalyzer,
+  platform,
+}: BuildOptions): Configuration["plugins"] {
   const isDev = mode === "development" ? true : false;
   const isProd = mode === "production" ? true : false;
 
@@ -12,6 +17,15 @@ export function buildPlugins({mode, paths, isAnalyzer}: BuildOptions): Configura
     new HtmlWebpackPlugin({
       /** приводим ссылку на html файл */
       template: paths.html,
+    }),
+    /** Плагин из под коробки вебпака, устанавливать отдельно не надо
+     * Он подменяет глобальные переменные в коде на те значения которые мы задаем на этапе сборки
+     * см. по нему доку вебпака
+     */
+    new DefinePlugin({
+      /** JSON.stringify(platform) - костыль , т.к. отваливается сборка, хотя platform строка */
+      __PLATFORM__: JSON.stringify(platform),
+      __ENV__: JSON.stringify(mode)
     }),
   ];
 

@@ -10,6 +10,7 @@ declare module "*.png";
 declare module "*.jpg";
 declare module "*.jpeg";
 
+/** также будет работать */
 // declare module "*.svg";
 
 /** чтобы использовать svg как реактовские компонеты (декларация для тайпскрипт что экспортируется свг ) */
@@ -18,3 +19,6 @@ declare module "*.svg" {
   const SVG: React.VFC<React.SVGProps<SVGSVGElement>>;
   export default SVG;
 }
+
+declare const __PLATFORM__: "desktop" | "mobile";
+declare const __ENV__: "production" | "development";

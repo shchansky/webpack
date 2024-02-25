@@ -1,4 +1,8 @@
-import { BuildPaths, BuildMode } from "./config/build/types/types";
+import {
+  BuildPaths,
+  BuildMode,
+  BuildPlatform,
+} from "./config/build/types/types";
 import path from "path";
 import webpack from "webpack";
 
@@ -8,6 +12,7 @@ interface EnvVariables {
   mode: BuildMode;
   port: number;
   isAnalyzer?: boolean;
+  platform?: BuildPlatform;
 }
 
 export default (env: EnvVariables) => {
@@ -28,6 +33,7 @@ export default (env: EnvVariables) => {
     paths,
     //чтобы постоянно не открывался BundleAnalyzerPlugin
     isAnalyzer: env.isAnalyzer,
+    platform: env.platform ?? "desktop",
   });
 
   return config;

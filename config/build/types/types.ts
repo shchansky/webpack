@@ -10,6 +10,7 @@ export interface BuildPaths {
 }
 
 export type BuildMode = "production" | "development";
+export type BuildPlatform = "mobile" | "desktop";
 
 export interface BuildOptions {
   port: number;
@@ -17,4 +18,6 @@ export interface BuildOptions {
   mode: BuildMode;
   //чтобы постоянно не открывался BundleAnalyzerPlugin
   isAnalyzer?: boolean;
+
+  platform?: BuildPlatform;
 }
