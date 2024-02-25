@@ -6,6 +6,17 @@ import { BuildOptions } from "./types/types";
 export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
   const isDev = options.mode === "development" ? true : false;
 
+  const cssLoaderWithModules = {
+    loader: "css-loader",
+    options: {
+      //для загрузки css модулей
+      modules: {
+        /** [hash:base64:8] - 8 это количество символов сколько взять*/
+        localIdentName: isDev ? "[path][name]__[local]" : "[hash:base64:8]",
+      },
+    },
+  };
+
   /** лоадер для обработки только css файлов */
   const scssLoader = {
     /** Регулярка только для обработки css afqkjd */
@@ -23,9 +34,15 @@ export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
        * плагину MiniCssExtractPlugin в папке build будет файл main.css (или вложенной апапке css в build если пропишем опции в MiniCssExtractPlugin).
        * Если бы пользовали style-loader то css был бы в коде js
        * По условию isDev в продакшен режиме используем MiniCssExtractPlugin (), а в режиме разработки style-loader
+       * Creates "style" nodes from JS strings
        */
       isDev ? "style-loader" : MiniCssExtractPlugin.loader,
-      "css-loader",
+
+      //Перевод css в CommonJS
+      // "css-loader",
+      cssLoaderWithModules,
+
+      //компилирует sass в сss
       "sass-loader",
     ],
   };

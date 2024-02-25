@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.scss";
+import classes from "./App.module.scss";
 
 export const App = () => {
   const [count, setCount] = React.useState(1);
@@ -8,8 +8,9 @@ export const App = () => {
     <>
       <div>App</div>
       <hr />
-      <h2>{count}</h2>
+      <h2 className={classes.value}>{count}</h2>
       <button
+        className={classes.button}
         onClick={() => {
           setCount((prev) => ++prev);
         }}

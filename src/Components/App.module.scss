@@ -1,8 +1,14 @@
-button {
+.button {
     background: red;
     padding: 20px;
     span {
         color: blue;
         font-size: 25px;
     }
+}
+
+
+.value {
+    color: green;
+    font-size: 35px;
 }
