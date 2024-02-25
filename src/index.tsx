@@ -1,5 +1,11 @@
+import { Suspense } from "react";
 import { createRoot } from "react-dom/client";
-import { App } from "./Components/App";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { App } from "./сomponents/App";
+
+import { LazyAbout } from "./pages/about/About.lazy";
+import { LazyShop } from "./pages/shop/Shop.lazy";
+// import Shop from "./pages/shop/Shop";
 
 const root = document.getElementById("root");
 
@@ -9,4 +15,29 @@ if (!root) {
 
 const container = createRoot(root);
 
-container.render(<App />);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "/about",
+        element: (
+          <Suspense fallback={"Loading..."}>
+            <LazyAbout />
+          </Suspense>
+        ),
+      },
+      {
+        path: "/shop",
+        element: (
+          <Suspense fallback={"Loading..."}>
+            <LazyShop />
+          </Suspense>
+        ),
+      },
+    ],
+  },
+]);
+
+container.render(<RouterProvider router={router} />);

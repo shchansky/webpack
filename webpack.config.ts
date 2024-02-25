@@ -7,6 +7,7 @@ import { buildWebpack } from "./config/build/buildWebpack";
 interface EnvVariables {
   mode: BuildMode;
   port: number;
+  isAnalyzer?: boolean;
 }
 
 export default (env: EnvVariables) => {
@@ -23,6 +24,8 @@ export default (env: EnvVariables) => {
     port: env.port ?? 3000,
     mode: env.mode ?? "development",
     paths,
+    //чтобы постоянно не открывался BundleAnalyzerPlugin
+    isAnalyzer: env.isAnalyzer,
   });
 
   return config;

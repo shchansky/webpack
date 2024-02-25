@@ -1,16 +1,17 @@
 import webpack, { Configuration } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import { BuildOptions } from "./types/types";
 
-export function buildPlugins(options: BuildOptions): Configuration["plugins"] {
-  const isDev = options.mode === "development" ? true : false;
-  const isProd = options.mode === "production" ? true : false;
+export function buildPlugins({mode, paths, isAnalyzer}: BuildOptions): Configuration["plugins"] {
+  const isDev = mode === "development" ? true : false;
+  const isProd = mode === "production" ? true : false;
 
   const plugins: Configuration["plugins"] = [
     new HtmlWebpackPlugin({
       /** приводим ссылку на html файл */
-      template: options.paths.html,
+      template: paths.html,
     }),
   ];
 
@@ -40,6 +41,16 @@ export function buildPlugins(options: BuildOptions): Configuration["plugins"] {
         }
       )
     );
+  }
+
+  if (isAnalyzer) {
+    /** Позволяет следить за размерами чанков (страницы About и Shop) и бандла, как смотерть сколько весят библиотеки, какой размер от % бандла они занимают
+     * устанавливается как dev зависимость. В dev нет смысла анализировать бандл, т.к. он не минифицирован и в нем много лишнего---> используем его в прод режиме
+     * устанавливай c типами:
+     * -npm i -D webpack-bundle-analyzer@4.9.1
+     * -npm i -D @types/webpack-bundle-analyzer
+     */
+    plugins.push(new BundleAnalyzerPlugin());
   }
 
   return plugins;
