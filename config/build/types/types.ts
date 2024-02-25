@@ -5,7 +5,8 @@ export interface BuildPaths {
   html: string;
   //путь куда будет происходить сборка
   output: string;
-  src: string
+  //для алиасов
+  src: string;
 }
 
 export type BuildMode = "production" | "development";

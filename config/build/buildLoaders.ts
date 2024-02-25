@@ -6,6 +6,42 @@ import { BuildOptions } from "./types/types";
 export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
   const isDev = options.mode === "development" ? true : false;
 
+  /** Загрузка картинок */
+  const assetLoader = {
+    /** в регулярке типы картинок */
+    test: /\.(png|jpg|jpeg|gif)$/i,
+    type: "asset/resource",
+  };
+
+  /** Закгрузка svg как реакт рабочий вариант */
+  // const svgrLoader = {
+  //   test: /\.svg$/,
+  //   use: ["@svgr/webpack"],
+  // };
+
+  /** Закгрузка svg как реакт клмпонентов (смотри доку svgrLoader, данные что в use данные из библиотеки берем ) */
+  const svgrLoader = {
+    test: /\.svg$/i,
+    use: [
+      {
+        loader: "@svgr/webpack",
+        options: {
+          icon: true,
+          svgoConfig: {
+            plugins: [
+              {
+                name: "convertColors",
+                params: {
+                  currentColor: true,
+                },
+              },
+            ],
+          },
+        },
+      },
+    ],
+  };
+
   const cssLoaderWithModules = {
     loader: "css-loader",
     options: {
@@ -59,5 +95,5 @@ export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
     exclude: /node_modules/,
   };
 
-  return [scssLoader, tsLoader];
+  return [assetLoader, scssLoader, tsLoader, svgrLoader];
 }

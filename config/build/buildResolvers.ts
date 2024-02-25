@@ -10,8 +10,8 @@ export function buildResolvers(
     /* #endregion */
 
     alias: {
-
-      "@": options.paths.src
-    }
+      /** "@" - значок алиаса, options.paths.src - путь в котором находится папка  src*/
+      "@": options.paths.src,
+    },
   };
 }

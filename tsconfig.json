@@ -22,16 +22,13 @@
     //можно писать такой 
     //import React from "react"
     "allowSyntheticDefaultImports": true,
-
-    //для использования алиасов
-    "paths": {
-      "@/*" : ["./src"]
-    },
-    //для использования алиасов
+      //для использования алиасов (см. картинки)
     "baseUrl": ".",
-
-
+      //для использования алиасов (см. картинки)
+    "paths": {
+      "@/*" : ["./src/*"]
     },
+  },
     "ts-node": {
       "compilerOptions": {
         "module": "CommonJS"
