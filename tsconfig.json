@@ -23,6 +23,14 @@
     //import React from "react"
     "allowSyntheticDefaultImports": true,
 
+    //для использования алиасов
+    "paths": {
+      "@/*" : ["./src"]
+    },
+    //для использования алиасов
+    "baseUrl": ".",
+
+
     },
     "ts-node": {
       "compilerOptions": {

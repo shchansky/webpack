@@ -8,5 +8,10 @@ export function buildResolvers(
     /* #region  Резолвинг расширений для файлов с исходным кодом */
     extensions: [".tsx", ".ts", ".js"],
     /* #endregion */
+
+    alias: {
+
+      "@": options.paths.src
+    }
   };
 }

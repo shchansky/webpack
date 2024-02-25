@@ -18,6 +18,8 @@ export default (env: EnvVariables) => {
     entry: path.resolve(__dirname, "src", "index.tsx"),
     /** приводим ссылку на html файл */
     html: path.resolve(__dirname, "public", "index.html"),
+    /** для алиасов */
+    src: path.resolve(__dirname, "src"),
   };
 
   const config: webpack.Configuration = buildWebpack({

@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { App } from "./сomponents/App";
 
 import { LazyAbout } from "./pages/about/About.lazy";
+
 import { LazyShop } from "./pages/shop/Shop.lazy";
 // import Shop from "./pages/shop/Shop";
 
