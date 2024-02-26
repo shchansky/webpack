@@ -2,6 +2,7 @@ import webpack, { Configuration, DefinePlugin } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
 import { BuildOptions } from "./types/types";
 
 export function buildPlugins({
@@ -27,6 +28,11 @@ export function buildPlugins({
       __PLATFORM__: JSON.stringify(platform),
       __ENV__: JSON.stringify(mode)
     }),
+
+    /** Плагин для проверки типов в реалтайме, и запус кается в отдельном процессе. Позволяет отключить проверку типов в ts-loader в файле buildLoaders
+     * и существенно сократить время сборки
+     */
+    new ForkTsCheckerWebpackPlugin()
   ];
 
   if (isDev) {
