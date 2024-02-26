@@ -7,6 +7,8 @@ export interface BuildPaths {
   output: string;
   //для алиасов
   src: string;
+  //для favicon
+  public: string;
 }
 
 export type BuildMode = "production" | "development";

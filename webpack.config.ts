@@ -25,6 +25,8 @@ export default (env: EnvVariables) => {
     html: path.resolve(__dirname, "public", "index.html"),
     /** для алиасов */
     src: path.resolve(__dirname, "src"),
+    //для favicon
+    public: path.resolve(__dirname, "public"),
   };
 
   const config: webpack.Configuration = buildWebpack({

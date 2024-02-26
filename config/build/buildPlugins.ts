@@ -4,7 +4,8 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import { BuildOptions } from "./types/types";
-import ReactRefreshTypeScript from "@pmmmwh/react-refresh-webpack-plugin"
+import ReactRefreshTypeScript from "@pmmmwh/react-refresh-webpack-plugin";
+import path from "path";
 
 export function buildPlugins({
   mode,
@@ -19,6 +20,8 @@ export function buildPlugins({
     new HtmlWebpackPlugin({
       /** приводим ссылку на html файл */
       template: paths.html,
+      /** Подгрузка пути favicon */
+      favicon: path.resolve(paths.public, "favicon.ico"),
     }),
     /** Плагин из под коробки вебпака, устанавливать отдельно не надо
      * Он подменяет глобальные переменные в коде на те значения которые мы задаем на этапе сборки
@@ -38,10 +41,10 @@ export function buildPlugins({
     /** Плагин для проверки типов в реалтайме, и запус кается в отдельном процессе. Позволяет отключить проверку типов в ts-loader в файле buildLoaders
      * и существенно сократить время сборки
      */
-     plugins.push(new ForkTsCheckerWebpackPlugin());
+    plugins.push(new ForkTsCheckerWebpackPlugin());
 
-     /** Плагин для обновления кода без перезагрузки страницы  */
-     plugins.push(new ReactRefreshTypeScript())
+    /** Плагин для обновления кода без перезагрузки страницы  */
+    plugins.push(new ReactRefreshTypeScript());
   }
 
   if (isProd) {
