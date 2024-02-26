@@ -5,6 +5,7 @@ import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import { BuildOptions } from "./types/types";
 import ReactRefreshTypeScript from "@pmmmwh/react-refresh-webpack-plugin";
+import CopyPlugin from "copy-webpack-plugin";
 import path from "path";
 
 export function buildPlugins({
@@ -56,6 +57,7 @@ export function buildPlugins({
        *  если не передать аргументы в new MiniCssExtractPlugin)
        * По условию isProd плагин MiniCssExtractPlugin будет использоваться для продакшн сборки
        */
+
       new MiniCssExtractPlugin(
         /** Опционально (не обязательно) можно передать парамеиры конфигурации */
         {
@@ -67,6 +69,18 @@ export function buildPlugins({
           chunkFilename: "css/[name].[contenthash:8].css",
         }
       )
+    );
+
+    /** Если хотим переместить переводы в файлах en.json и ru.json в бандл из папки public */
+    plugins.push(
+      new CopyPlugin({
+        patterns: [
+          /** указываем откуда и куда хотим переместить кусок нашего проекта, paths.output -- путь до папки build */
+          { from: path.resolve(paths.public, "locales"), to: path.resolve(paths.output, "locales")  },
+          /** Если еще что-то захотим добавить */
+          // { from: "other", to: "public" },
+        ],
+      })
     );
   }
 
