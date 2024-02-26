@@ -23,9 +23,9 @@ export const App = () => {
    * Можно разделять бандлы на несколько. Один для десктопа, другой для мобильной версии
    * Неиспользуемые ветки кода вебпак выпиливает из сборки (этот механизм называется tree shaking)
    */
-  if (__PLATFORM__ === "mobile") return <div>IsMobilePlatform</div>;
+  // if (__PLATFORM__ === "mobile") return <div>IsMobilePlatform</div>;
 
-  if (__PLATFORM__ === "desktop") return <div>IsDesktopPlatform</div>;
+  // if (__PLATFORM__ === "desktop") return <div>IsDesktopPlatform</div>;
 
   /** Кусок кода как пример */
   // if(__ENV__ === "development") {addDevTools}
@@ -33,7 +33,7 @@ export const App = () => {
   return (
     <div>
       <h1>Platform = {__PLATFORM__}</h1>
-      <img width={100} height={100} src={avatarPng} />
+      <img width={500} height={100} src={avatarPng} />
       <img width={100} height={100} src={avatarJpg} />
       <div>
         <СalendarSvg fill={"red"} width={50} height={50} />

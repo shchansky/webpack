@@ -2,8 +2,9 @@ import webpack, { Configuration, DefinePlugin } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import { BuildOptions } from "./types/types";
+import ReactRefreshTypeScript from "@pmmmwh/react-refresh-webpack-plugin"
 
 export function buildPlugins({
   mode,
@@ -26,18 +27,21 @@ export function buildPlugins({
     new DefinePlugin({
       /** JSON.stringify(platform) - костыль , т.к. отваливается сборка, хотя platform строка */
       __PLATFORM__: JSON.stringify(platform),
-      __ENV__: JSON.stringify(mode)
+      __ENV__: JSON.stringify(mode),
     }),
-
-    /** Плагин для проверки типов в реалтайме, и запус кается в отдельном процессе. Позволяет отключить проверку типов в ts-loader в файле buildLoaders
-     * и существенно сократить время сборки
-     */
-    new ForkTsCheckerWebpackPlugin()
   ];
 
   if (isDev) {
     //замедляет сборку, показывает в ide процент сборки
     plugins.push(new webpack.ProgressPlugin());
+
+    /** Плагин для проверки типов в реалтайме, и запус кается в отдельном процессе. Позволяет отключить проверку типов в ts-loader в файле buildLoaders
+     * и существенно сократить время сборки
+     */
+     plugins.push(new ForkTsCheckerWebpackPlugin());
+
+     /** Плагин для обновления кода без перезагрузки страницы  */
+     plugins.push(new ReactRefreshTypeScript())
   }
 
   if (isProd) {

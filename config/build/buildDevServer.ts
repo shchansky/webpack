@@ -9,10 +9,12 @@ export function buildDevServer(options: BuildOptions): DevServerConfiguration {
      * т.к. роутинг в SPA клиентский, т.е. он происходит за счет js (навигация за счет js), а не за счет подгрузки html файла что в папке public
      * Посмотриво вкладке Network вызов http://localhost:3000/about
      * Ищи в доке вебпака devServer.historyApiFallback - там объяснение
-     * 
+     *
      * Эта опиция работает только для dev-сервера. Если при деплое приложения статику раздавать через nginx--->
      * придется проксировать все запросы через index.html. Смотри ролик про деплой фронтенд приложения
      */
     historyApiFallback: true,
+    /** Для обновления кода без перезагрузки страницы, использовать совместно с плаггинами react-refresh-webpack-plugin и react-refresh-typescript, чтобы все ок работало */
+    hot: true,
   };
 }

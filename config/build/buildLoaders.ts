@@ -2,6 +2,7 @@ import { ModuleOptions } from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { BuildOptions } from "./types/types";
+import ReactRefreshTypeScript from "react-refresh-typescript";
 
 export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
   const isDev = options.mode === "development" ? true : false;
@@ -106,10 +107,15 @@ export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
       {
         loader: "ts-loader",
         options: {
-          /** Не проверяет типы тайпскрипта */
+          /** Не проверяет типы тайпскрипта с целью ускорения сборки */
           transpileOnly: true,
           /** Проверяет типы тайпскрипта */
           // transpileOnly: false,
+
+          /** Для обновления кода без перезагрузки страницы  */
+          getCustomTransformers: () => ({
+            before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
+          }),
         },
       },
     ],
