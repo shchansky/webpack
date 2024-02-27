@@ -9,12 +9,25 @@ import СalendarSvg from "@/assets/calendar.svg";
 /** TREE SHAKING
  * Покуда эта ф-ия не будет использована, она в итоговый бандл не попадент
  * */
-function TODO(num: number) {
-  console.log("TODOFUNCTION");
+// function TODO(num: number) {
+//   console.log("TODOFUNCTION");
+// }
+
+function TODO() {
+  TODO2();
+}
+
+function TODO2() {
+  throw new Error(" custom error");
 }
 
 export const App = () => {
   const [count, setCount] = React.useState(1);
+
+  const increment = () => {
+    // setCount((prev) => ++prev);
+    TODO();
+  };
 
   // Сборка упадет с ошибкой тайпскрипта (см. комменты в файле buildLoader). Также проверка типов существенно замедлет сборку
   // TODO("ddd");
@@ -47,12 +60,7 @@ export const App = () => {
       <div>App</div>
       <hr />
       <h2 className={classes.value}>{count}</h2>
-      <button
-        className={classes.button}
-        onClick={() => {
-          setCount((prev) => ++prev);
-        }}
-      >
+      <button className={classes.button} onClick={increment}>
         <span>Inc</span>
       </button>
       {/** В Outlet отрисовывается контент react-router-dom */}

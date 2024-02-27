@@ -37,8 +37,14 @@ export function buildWebpack(options: BuildOptions): webpack.Configuration {
     resolve: buildResolvers(options),
     /* #endregion */
 
-    /* #region  devtool карты с исходным кодом */
-    devtool: isDev && "inline-source-map",
+    /** #region  devtool карты с исходным кодом. Если не показать, то во вкладке сервиса панели разработчика будет трэш-код, который невозможно читать.
+     * Необходим для отлова и дебага ошибок
+     *
+     * https://webpack.js.org/configuration/devtool/#devtool     выбирай вид source-map который подходит
+     *
+     * source-map рекомендуется докой, но он медленный
+     * */
+    devtool: isDev ? "inline-source-map" : "source-map",
     /* #endregion */
 
     /* #region  devServer для запуска сервера по указанном порту */
