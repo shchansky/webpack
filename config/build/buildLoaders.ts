@@ -123,5 +123,39 @@ export function buildLoaders(options: BuildOptions): ModuleOptions["rules"] {
     exclude: /node_modules/,
   };
 
-  return [assetLoader, scssLoader, tsLoader, svgrLoader];
+  const babelLoader = {
+    /** Регулярка из доки обрабатывает только js файлы */
+    // test: /\.m?js$/,
+    /** В регулярке обработка ts, tsx файлов */
+    test: /\.tsx?$/,
+    exclude: /node_modules/,
+    use: {
+      loader: "babel-loader",
+
+      /** Настройки пресетов также вынесены в файл babel.config.json (в качестве альтернативного примера - сожержимое этого файла закоментировано).
+       * Если все-таки брать данные из  babel.config.json, то поле  options надо закоментировать*/
+      options: {
+        /** Массив пресетов (читай вкладку Presets в документации). Для пресетов надо ставить пакеты через npm */
+        presets: [
+          "@babel/preset-env",
+          /**Этот пресет добавляет поддержку синтаксиса типов, используемого языком программирования TypeScript .
+           * Однако этот плагин не добавляет возможность проверки типа переданного ему JavaScript.
+           * Для этого вам необходимо установить и настроить TypeScript */
+          "@babel/preset-typescript",
+          /** Если необходимо довать опций в пресет необходимо код завернуть в квадратные скобки (сделать через массив) */
+          ["@babel/preset-react", { runtime: isDev ? "automatic" : "classic" }],
+        ],
+      },
+    },
+  };
+
+  return [
+    assetLoader,
+    scssLoader,
+    /** Рабочий вариант, на вместо него опробован babelLoader */
+    // tsLoader,
+
+    babelLoader,
+    svgrLoader,
+  ];
 }
