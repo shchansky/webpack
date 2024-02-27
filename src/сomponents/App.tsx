@@ -31,8 +31,8 @@ export const App = () => {
   // if(__ENV__ === "development") {addDevTools}
 
   return (
-    <div>
-      <h1>Platform = {__PLATFORM__}</h1>
+    <div data-testId={"AppDataTestId"}>
+      <h1 data-testId={"PlatformDataTestId"}>Platform = {__PLATFORM__}</h1>
       <img width={100} height={100} src={avatarPng} />
       <img width={100} height={100} src={avatarJpg} />
       <div>
